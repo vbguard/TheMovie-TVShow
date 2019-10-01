@@ -1,4 +1,4 @@
-import tmdb from "./tmdb.config";
+import tmdb from "./tmdb.config.js";
 
 const popularTvUrl =
   tmdb.BASE_URL +
