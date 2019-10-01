@@ -1,16 +1,42 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import api from "./services/api";
+import card from "./card";
 
-import "./styles.css";
+const root = document.getElementById("root");
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbkkkox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-    </div>
-  );
+const store = {
+  movieFetched: {},
+  error: {
+    status: false,
+    message: ""
+  }
+};
+
+async function initFetchAndSave() {
+  try {
+    store.error.status = false;
+    store.error.message = "";
+
+    const getPopularTvData = await api.getPopularTv();
+    store.movieFetched = getPopularTvData;
+  } catch (error) {
+    console.log(error);
+    store.error.status = true;
+    store.error.message = error.message;
+  }
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+function generateMoviesListItems(movies) {
+  const items = movies.map(movie => {
+    return card(movie);
+  });
+  console.log(items);
+  return items;
+}
+
+(async function() {
+  await initFetchAndSave();
+  console.log(store);
+  const list = document.createElement("ul");
+  list.append(...generateMoviesListItems(store.movieFetched.results));
+  root.append(list);
+})();

@@ -1,4 +1,12 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
+#root {
+  border: 1px solid #000;
+}
+
+div {
+  color: blue;
+}
+
+ul {
+  list-style: none;
+  display: flex;
 }
